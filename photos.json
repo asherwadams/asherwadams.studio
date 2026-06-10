@@ -1,0 +1,5 @@
+[
+  { "src": "photos/landing1.jpg",   "category": ["Hong Kong"],   "location": "Mong Kok, Hong Kong",  "blurb": "" },
+  { "src": "photos/biography1.jpg", "category": ["Shanghai"],    "location": "Lujiazui, Shanghai",   "blurb": "" },
+  { "src": "photos/contact1.jpg",   "category": ["Hong Kong"],   "location": "Hong Kong",            "blurb": "" }
+]
