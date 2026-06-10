@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asher Adams</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💮</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exifr/7.1.3/full.umd.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; background: #F0EEE9; color: #1A1A18; overflow: hidden; }
+
+/* SITE SETTINGS — edit these */
+:root {
+  --landing-photo:   url('photos/landing1.jpg');
+  --bio-photo:       url('photos/biography1.jpg');
+  --contact-photo:   url('photos/contact1.jpg');
+}
+
+#app { display: flex; height: 100vh; width: 100vw; }
+
+#sidebar { width: 280px; min-width: 280px; height: 100vh; background: #F0EEE9; display: flex; flex-direction: column; padding: 42px 40px 36px 40px; position: fixed; left: 0; top: 0; z-index: 100; }
+#sidebar-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; letter-spacing: 0.01em; color: #1A1A18; margin-bottom: 48px; cursor: pointer; line-height: 1.3; }
+#sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+#sidebar-nav li { display: flex; align-items: center; }
+.nav-dash { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; color: #1A1A18; opacity: 0; margin-right: 7px; transition: opacity 0.2s; user-select: none; }
+.nav-dash.visible { opacity: 0.7; }
+#sidebar-nav li a { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; color: #1A1A18; text-decoration: none; letter-spacing: 0.01em; opacity: 0.7; transition: opacity 0.2s; cursor: pointer; }
+#sidebar-nav li a:hover, #sidebar-nav li a.active { opacity: 1; }
+#sidebar-copyright { margin-top: auto; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 12px; color: #1A1A18; opacity: 0.45; letter-spacing: 0.01em; }
+
+#content { margin-left: 280px; width: calc(100vw - 280px); height: 100vh; position: relative; overflow: hidden; }
+
+.page { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 0.55s ease; }
+.page.active { opacity: 1; pointer-events: all; }
+
+/* LANDING */
+#page-landing { background: #F0EEE9; overflow: hidden; }
+.placeholder-photo { width: 100%; height: 100%; background: #C8C6C0; opacity: 0; transition: opacity 0.9s ease; }
+.placeholder-photo.loaded { opacity: 1; }
+
+/* PORTFOLIO */
+#page-portfolio { background: #fff; overflow-y: auto; overflow-x: hidden; }
+#portfolio-header { position: sticky; top: 0; background: #fff; z-index: 50; padding: 32px 48px 0 48px; }
+#portfolio-header-row { display: flex; align-items: baseline; gap: 32px; flex-wrap: wrap; }
+#portfolio-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; letter-spacing: 0.01em; color: #1A1A18; white-space: nowrap; cursor: pointer; }
+#portfolio-filters { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
+.filter-btn { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 14px; color: #1A1A18; background: none; border: none; cursor: pointer; opacity: 0.4; letter-spacing: 0.02em; padding: 0; transition: opacity 0.2s; }
+.filter-btn:hover { opacity: 0.7; }
+.filter-btn.active { opacity: 1; }
+#portfolio-rule { width: 100%; height: 1px; background: #1A1A18; opacity: 0.12; margin-top: 18px; }
+#mosaic-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 4px 24px 48px 24px; }
+.mosaic-col { display: flex; flex-direction: column; gap: 4px; }
+.mosaic-item { width: 100%; cursor: pointer; overflow: hidden; display: block; opacity: 0; }
+.mosaic-item.fade-in { animation: fadeInItem 0.5s ease forwards; }
+@keyframes fadeInItem { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.mosaic-item img, .mosaic-item .photo-placeholder { width: 100%; display: block; transition: transform 0.4s ease; }
+.mosaic-item:hover img, .mosaic-item:hover .photo-placeholder { transform: scale(1.015); }
+.photo-placeholder { background: #C8C6C0; }
+
+/* LIGHTBOX */
+#lightbox { position: fixed; inset: 0; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+#lightbox.open { opacity: 1; pointer-events: all; }
+#lightbox-overlay { position: absolute; inset: 0; background: rgba(248,247,244,0.93); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+#lightbox-inner { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+#lightbox-img-wrap { position: relative; max-width: 68vw; max-height: 80vh; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-left: 140px; }
+#lightbox-img, #lightbox-placeholder { max-width: 68vw; max-height: 80vh; object-fit: contain; display: block; transition: opacity 0.28s ease, transform 0.3s ease; transform-origin: center center; cursor: zoom-in; }
+#lightbox-placeholder { width: 600px; height: 400px; background: #C8C6C0; }
+#lightbox-img.zoomed { cursor: zoom-out; }
+#lightbox-meta { position: absolute; bottom: 44px; left: 0; width: 280px; padding-left: 40px; text-align: left; }
+#lightbox-meta .meta-blurb { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; font-style: italic; color: #1A1A18; margin-bottom: 6px; letter-spacing: 0.01em; }
+#lightbox-meta .meta-location { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 14px; color: #1A1A18; opacity: 0.75; margin-bottom: 4px; letter-spacing: 0.01em; }
+#lightbox-meta .meta-exif { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 10px; color: #1A1A18; opacity: 0.45; letter-spacing: 0.07em; text-transform: uppercase; }
+.lightbox-nav { position: absolute; top: 0; height: 100%; width: 72px; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 5; }
+.lightbox-nav:hover { background: rgba(240,238,233,0.22); }
+#lightbox-prev { left: 0; }
+#lightbox-next { right: 0; }
+.lightbox-nav svg { width: 18px; height: 18px; stroke: #1A1A18; stroke-width: 1.2; fill: none; opacity: 0.45; }
+#lightbox-close { position: absolute; top: 26px; right: 90px; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 10px; color: #1A1A18; opacity: 0.4; letter-spacing: 0.1em; transition: opacity 0.2s; text-transform: uppercase; z-index: 20; padding: 8px; }
+#lightbox-close:hover { opacity: 0.9; }
+
+/* BIOGRAPHY */
+#page-biography { background: #F0EEE9; overflow: hidden; }
+#bio-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.11; z-index: 1; }
+#bio-text-panel { position: absolute; top: 0; left: 0; width: 48%; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 64px 56px; z-index: 2; }
+#bio-text-inner { background: rgba(240,238,233,0.72); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); padding: 40px 44px; border-radius: 2px; }
+#bio-text-panel h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; letter-spacing: 0.01em; margin-bottom: 32px; color: #1A1A18; }
+#bio-text-panel p { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; line-height: 1.85; color: #1A1A18; opacity: 0.82; margin-bottom: 20px; max-width: 400px; }
+#bio-right { position: absolute; top: 0; right: 0; width: 52%; height: 100%; overflow: hidden; z-index: 0; }
+
+/* CONTACT */
+#page-contact { background: #F0EEE9; overflow: hidden; }
+#contact-right { position: absolute; top: 0; right: 0; width: 52%; height: 100%; overflow: hidden; }
+#contact-text-panel { position: absolute; top: 0; left: 0; width: 48%; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 64px 56px; z-index: 2; }
+#contact-text-panel h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; letter-spacing: 0.01em; margin-bottom: 10px; color: #1A1A18; }
+#contact-context { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 13px; color: #1A1A18; opacity: 0.48; letter-spacing: 0.01em; margin-bottom: 40px; line-height: 1.65; }
+.contact-item { display: flex; flex-direction: column; margin-bottom: 24px; }
+.contact-label { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A18; opacity: 0.38; margin-bottom: 5px; }
+.contact-value { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; color: #1A1A18; text-decoration: none; letter-spacing: 0.01em; opacity: 0.82; transition: opacity 0.2s; }
+.contact-value:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <aside id="sidebar">
+    <div id="sidebar-name" onclick="navigate('landing')">Asher Adams</div>
+    <ul id="sidebar-nav">
+      <li><span class="nav-dash">—</span><a onclick="navigate('portfolio')" data-page="portfolio">Portfolio</a></li>
+      <li><span class="nav-dash">—</span><a onclick="navigate('biography')" data-page="biography">Biography</a></li>
+      <li><span class="nav-dash">—</span><a onclick="navigate('contact')" data-page="contact">Contact</a></li>
+      <li><span class="nav-dash" style="opacity:0;pointer-events:none">—</span><a href="https://www.instagram.com/asherwadams/" target="_blank">Instagram</a></li>
+    </ul>
+    <div id="sidebar-copyright">© 2026 Asher Adams</div>
+  </aside>
+
+  <main id="content">
+    <section id="page-landing" class="page active">
+      <div style="width:100%;height:100%;">
+        <div class="placeholder-photo" id="landing-placeholder"></div>
+      </div>
+    </section>
+
+    <section id="page-portfolio" class="page">
+      <div id="portfolio-header">
+        <div id="portfolio-header-row">
+          <span id="portfolio-name" onclick="navigate('landing')">Asher Adams</span>
+          <div id="portfolio-filters"></div>
+        </div>
+        <div id="portfolio-rule"></div>
+      </div>
+      <div id="mosaic-grid"></div>
+    </section>
+
+    <section id="page-biography" class="page">
+      <canvas id="bio-canvas"></canvas>
+      <div id="bio-text-panel">
+        <div id="bio-text-inner">
+          <h2>Asher Adams</h2>
+          <p>I'm a neuroscience student at Northeastern University in Boston, originally from the Cambridge area. Photography has been a consistent part of my life for the past few years, mostly street and travel work with a focus on daily life and ordinary moments. I'm less interested in the dramatic or confrontational side of street photography and more drawn to light, mood, and the kind of scenes that are easy to walk past.</p>
+          <p>I've shot across Japan, Hong Kong, China, Belize, Canada, the American West Coast, and the American Northeast, and the portfolio here reflects that range. The work spans cameras I've owned over the years: Sony A7C II, Fujifilm X100VI, and XS-10, each representing a different period of growth.</p>
+          <p>I'm always happy to connect. For professional inquiries, the contact page is the best place to reach me. For everything more casual, Instagram works better.</p>
+        </div>
+      </div>
+      <div id="bio-right">
+        <img src="photos/biography1.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+    </section>
+
+    <section id="page-contact" class="page">
+      <div id="contact-text-panel">
+        <h2>Contact</h2>
+        <p id="contact-context">Professional inquiries by email. For everything more casual, Instagram or phone works fine.</p>
+        <div class="contact-item"><span class="contact-label">Email</span><a class="contact-value" href="mailto:asherwadams4@gmail.com">asherwadams4@gmail.com</a></div>
+        <div class="contact-item"><span class="contact-label">Instagram</span><a class="contact-value" href="https://www.instagram.com/asherwadams/" target="_blank">@asherwadams</a></div>
+        <div class="contact-item"><span class="contact-label">Phone</span><a class="contact-value" href="tel:6179975432">617-997-5432</a></div>
+      </div>
+      <div id="contact-right">
+        <img src="photos/contact1.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="lightbox">
+  <div id="lightbox-overlay" onclick="closeLightbox()"></div>
+  <div id="lightbox-inner">
+    <button id="lightbox-prev" class="lightbox-nav" onclick="stepLightbox(-1)">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button id="lightbox-next" class="lightbox-nav" onclick="stepLightbox(1)">
+      <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
+    <div id="lightbox-img-wrap">
+      <div id="lightbox-placeholder"></div>
+      <img id="lightbox-img" src="" alt="" onclick="toggleZoom()">
+    </div>
+    <div id="lightbox-meta">
+      <div class="meta-blurb" id="lb-blurb"></div>
+      <div class="meta-location" id="lb-location"></div>
+      <div class="meta-exif" id="lb-exif"></div>
+    </div>
+    <button id="lightbox-close" onclick="closeLightbox()">Close</button>
+  </div>
+</div>
+
+<script>
+const CATEGORIES = ["All","Tokyo","Osaka","Hiroshima","Hong Kong","Shanghai","Belize","Greece","Boston","San Francisco","Automotive"];
+
+let currentPage = 'landing';
+let PHOTOS = [];
+let filteredIndices = [];
+let lightboxIndex = 0;
+let portfolioBuilt = false;
+let bioCanvasBuilt = false;
+let isFading = false;
+let isZoomed = false;
+
+// ---- LOAD PHOTOS.JSON ----
+async function loadPhotos() {
+  try {
+    const res = await fetch('photos.json?cb=' + Date.now());
+    const data = await res.json();
+    PHOTOS = data;
+  } catch(e) {
+    PHOTOS = [];
+  }
+}
+
+// ---- EXIF READER ----
+async function getExif(src) {
+  try {
+    const exif = await exifr.parse(src, { pick: ['ExposureTime','ISO','FNumber','Model'] });
+    if (!exif) return {};
+    const ss = exif.ExposureTime ? (exif.ExposureTime < 1 ? '1/' + Math.round(1/exif.ExposureTime) : exif.ExposureTime + 's') : '';
+    const iso = exif.ISO ? String(exif.ISO) : '';
+    const ap  = exif.FNumber ? 'f/' + exif.FNumber : '';
+    return { ss, iso, aperture: ap };
+  } catch(e) { return {}; }
+}
+
+// ---- NAV ----
+function navigate(page) {
+  if (page === currentPage) return;
+  const prev = document.getElementById('page-' + currentPage);
+  const next = document.getElementById('page-' + page);
+  if (!next) return;
+  prev.classList.remove('active');
+  next.classList.add('active');
+  currentPage = page;
+  document.querySelectorAll('#sidebar-nav li').forEach(li => {
+    const a = li.querySelector('a[data-page]');
+    const dash = li.querySelector('.nav-dash');
+    if (!a || !dash) return;
+    const isActive = a.dataset.page === page;
+    a.classList.toggle('active', isActive);
+    dash.classList.toggle('visible', isActive);
+  });
+  if (page === 'portfolio' && !portfolioBuilt) buildPortfolio();
+  if (page === 'biography' && !bioCanvasBuilt) drawBioLines();
+}
+
+// ---- LANDING ----
+window.addEventListener('load', async () => {
+  await loadPhotos();
+  const ph = document.getElementById('landing-placeholder');
+  const img = document.createElement('img');
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.9s ease;display:block;';
+  img.onload = () => { img.style.opacity = 1; };
+  img.src = 'photos/landing1.jpg';
+  ph.replaceWith(img);
+});
+
+// ---- PORTFOLIO ----
+function buildPortfolio() {
+  portfolioBuilt = true;
+  const filtersEl = document.getElementById('portfolio-filters');
+  CATEGORIES.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => applyFilter(cat);
+    filtersEl.appendChild(btn);
+  });
+  renderGrid('All');
+}
+
+function renderGrid(filter) {
+  const grid = document.getElementById('mosaic-grid');
+  grid.innerHTML = '';
+  const visible = PHOTOS
+    .map((p, i) => ({ ...p, originalIndex: i }))
+    .filter(p => filter === 'All' || (p.category && p.category.includes(filter)));
+  filteredIndices = visible.map(p => p.originalIndex);
+  const cols = [[], [], [], [], []];
+  visible.forEach((photo, i) => { cols[i % 5].push(photo); });
+  cols.forEach(colPhotos => {
+    const colEl = document.createElement('div');
+    colEl.className = 'mosaic-col';
+    colPhotos.forEach(photo => {
+      const item = document.createElement('div');
+      item.className = 'mosaic-item';
+      item.dataset.index = photo.originalIndex;
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = photo.location || '';
+      img.style.cssText = 'width:100%;display:block;';
+      item.appendChild(img);
+      item.onclick = () => openLightbox(photo.originalIndex);
+      colEl.appendChild(item);
+    });
+    grid.appendChild(colEl);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('fade-in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.04 });
+  grid.querySelectorAll('.mosaic-item').forEach(el => observer.observe(el));
+}
+
+function applyFilter(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => { b.classList.toggle('active', b.textContent === cat); });
+  renderGrid(cat);
+}
+
+// ---- LIGHTBOX ----
+function openLightbox(originalIndex) {
+  lightboxIndex = filteredIndices.indexOf(originalIndex);
+  if (lightboxIndex === -1) lightboxIndex = 0;
+  showLightboxPhoto(lightboxIndex, false);
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+  resetZoom();
+}
+
+function stepLightbox(dir) {
+  if (isFading) return;
+  isFading = true;
+  const next = (lightboxIndex + dir + filteredIndices.length) % filteredIndices.length;
+  const img = document.getElementById('lightbox-img');
+  const ph  = document.getElementById('lightbox-placeholder');
+  resetZoom();
+  img.style.opacity = 0;
+  ph.style.opacity  = 0;
+  setTimeout(() => { lightboxIndex = next; showLightboxPhoto(lightboxIndex, true); isFading = false; }, 280);
+}
+
+async function showLightboxPhoto(idx, fadeIn) {
+  const originalIdx = filteredIndices[idx];
+  const photo = PHOTOS[originalIdx];
+  if (!photo) return;
+  const img = document.getElementById('lightbox-img');
+  const ph  = document.getElementById('lightbox-placeholder');
+  ph.style.display = 'none';
+  img.style.display = 'block';
+  img.style.opacity = 0;
+  img.onload = () => { img.style.opacity = 1; };
+  img.src = photo.src;
+  if (!fadeIn) setTimeout(() => { img.style.opacity = 1; }, 30);
+
+  // Set location and blurb immediately
+  document.getElementById('lb-blurb').textContent    = photo.blurb || '';
+  document.getElementById('lb-location').textContent = photo.location || '';
+  document.getElementById('lb-exif').textContent     = '';
+
+  // Read EXIF async
+  const exif = await getExif(photo.src);
+  const exifStr = [exif.ss && exif.ss, exif.iso && 'ISO ' + exif.iso, exif.aperture && exif.aperture].filter(Boolean).join('  ·  ');
+  document.getElementById('lb-exif').textContent = exifStr;
+}
+
+function toggleZoom() {
+  const img = document.getElementById('lightbox-img');
+  isZoomed = !isZoomed;
+  img.style.transform = isZoomed ? 'scale(1.9)' : 'scale(1)';
+  img.classList.toggle('zoomed', isZoomed);
+}
+
+function resetZoom() {
+  isZoomed = false;
+  const img = document.getElementById('lightbox-img');
+  img.style.transform = 'scale(1)';
+  img.classList.remove('zoomed');
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') stepLightbox(1);
+  if (e.key === 'ArrowLeft')  stepLightbox(-1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+// ---- BIO LINE ART ----
+function drawBioLines() {
+  bioCanvasBuilt = true;
+  const canvas = document.getElementById('bio-canvas');
+  const W = canvas.parentElement.offsetWidth || (window.innerWidth - 280);
+  const H = canvas.parentElement.offsetHeight || window.innerHeight;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#1A1A18'; ctx.lineWidth = 0.9; ctx.lineCap = 'round';
+  for (let i = 0; i < 14; i++) {
+    const startX = Math.random() * W; const startY = Math.random() * H;
+    ctx.beginPath(); ctx.moveTo(startX, startY);
+    let x = startX, y = startY;
+    for (let s = 0; s < 10 + Math.floor(Math.random() * 14); s++) {
+      const cp1x = x + (Math.random()-.5)*W*.7, cp1y = y + (Math.random()-.5)*H*.7;
+      const cp2x = x + (Math.random()-.5)*W*.7, cp2y = y + (Math.random()-.5)*H*.7;
+      const ex = Math.random()*W, ey = Math.random()*H;
+      ctx.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,ex,ey);
+      x = ex; y = ey;
+    }
+    ctx.stroke();
+  }
+}
+
+window.addEventListener('resize', () => { if (currentPage === 'biography') { bioCanvasBuilt = false; drawBioLines(); } });
+</script>
+</body>
+</html>
