@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Portfolio Manifest Generator</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a18; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 48px 24px; }
+h1 { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+.subtitle { font-size: 13px; color: #666; margin-bottom: 40px; line-height: 1.6; text-align: center; max-width: 520px; }
+#drop-zone {
+  width: 100%; max-width: 640px; border: 1.5px dashed #ccc; border-radius: 8px;
+  padding: 48px 32px; text-align: center; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s; background: #fff; margin-bottom: 24px;
+}
+#drop-zone.dragover { border-color: #1a1a18; background: #f0ede8; }
+#drop-zone p { font-size: 14px; color: #999; }
+#drop-zone strong { color: #1a1a18; }
+#file-input { display: none; }
+#photo-list { width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+.photo-row {
+  background: #fff; border-radius: 6px; padding: 12px 16px;
+  display: flex; align-items: center; gap: 16px; font-size: 13px;
+}
+.photo-thumb { width: 48px; height: 36px; object-fit: cover; border-radius: 3px; background: #e0e0e0; flex-shrink: 0; }
+.photo-info { flex: 1; }
+.photo-name { font-weight: 500; margin-bottom: 2px; }
+.photo-meta { color: #999; font-size: 12px; }
+.photo-order { width: 40px; font-size: 13px; color: #999; text-align: right; }
+.error { color: #c0392b; font-size: 12px; }
+#actions { display: flex; gap: 12px; }
+button {
+  padding: 10px 24px; border-radius: 6px; border: none; cursor: pointer;
+  font-size: 13px; font-weight: 500; transition: opacity 0.15s;
+}
+button:hover { opacity: 0.8; }
+#btn-generate { background: #1a1a18; color: #fff; }
+#btn-clear { background: #e8e8e6; color: #1a1a18; }
+#output-area { margin-top: 24px; width: 100%; max-width: 640px; }
+#output-box { background: #1a1a18; color: #a8e6a0; font-family: monospace; font-size: 12px; padding: 20px; border-radius: 6px; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; }
+.copy-btn { margin-top: 10px; background: #e8e8e6; color: #1a1a18; padding: 8px 18px; font-size: 12px; }
+.instructions { margin-top: 40px; max-width: 640px; width: 100%; background: #fff; border-radius: 8px; padding: 28px 32px; }
+.instructions h2 { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+.instructions ol { padding-left: 20px; font-size: 13px; line-height: 2; color: #444; }
+.instructions code { background: #f0ede8; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.tag { display: inline-block; background: #f0ede8; border-radius: 3px; padding: 1px 6px; font-size: 11px; color: #666; margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<h1>Portfolio Manifest Generator</h1>
+<p class="subtitle">
+  Drop your portfolio photos here to generate <code>manifest.json</code>.<br>
+  Name files like <strong>1japan.jpg</strong>, <strong>2hk.jpg</strong>, <strong>3china.jpg</strong> — number = order, word = category.
+</p>
+
+<div id="drop-zone" onclick="document.getElementById('file-input').click()">
+  <p><strong>Click to select photos</strong> or drag and drop them here</p>
+  <p style="margin-top:8px;font-size:12px;">Accepted keywords: japan · hk · china · belize · canada · greece · us · automotive</p>
+</div>
+<input type="file" id="file-input" multiple accept="image/*">
+
+<div id="photo-list"></div>
+
+<div id="actions" style="display:none;">
+  <button id="btn-generate" onclick="generate()">Generate manifest.json</button>
+  <button id="btn-clear" onclick="clearAll()">Clear</button>
+</div>
+
+<div id="output-area" style="display:none;">
+  <div id="output-box"></div>
+  <button class="copy-btn" onclick="copyOutput()">Copy JSON</button>
+  <p style="font-size:12px;color:#999;margin-top:8px;">
+    Paste this into <code>portfolio/manifest.json</code> on GitHub, or use the download button below.
+  </p>
+  <button class="copy-btn" onclick="downloadOutput()" style="margin-top:4px;">Download manifest.json</button>
+</div>
+
+<div class="instructions">
+  <h2>How to use this tool</h2>
+  <ol>
+    <li>Rename your photos: <code>1japan.jpg</code> <code>2hk.jpg</code> <code>3china.jpg</code> etc.</li>
+    <li>Drop them onto this page (or click to select).</li>
+    <li>Click <strong>Generate manifest.json</strong>.</li>
+    <li>Download the file and upload it to the <code>portfolio/</code> folder on GitHub.</li>
+    <li>Upload the photos themselves to the <code>portfolio/</code> folder on GitHub.</li>
+    <li>Cloudflare redeploys in ~30 seconds — your site updates automatically.</li>
+  </ol>
+  <p style="margin-top:16px;font-size:12px;color:#999;">
+    To reorder: rename the number prefixes, re-drop here, regenerate, re-upload manifest.json.<br>
+    Photos already on GitHub don't need re-uploading unless the filename changed.
+  </p>
+</div>
+
+<script>
+const VALID_CATS = ['japan','hk','china','belize','canada','greece','us','automotive'];
+let files = [];
+let outputJSON = '';
+
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => addFiles(fileInput.files));
+
+function addFiles(newFiles) {
+  for (const f of newFiles) {
+    if (!files.find(x => x.name === f.name)) files.push(f);
+  }
+  files.sort((a, b) => extractNum(a.name) - extractNum(b.name));
+  renderList();
+}
+
+function extractNum(name) {
+  const m = name.match(/^(\d+)/);
+  return m ? parseInt(m[1]) : 9999;
+}
+
+function extractCat(name) {
+  const base = name.replace(/\.[^.]+$/, '').replace(/^\d+/, '').toLowerCase();
+  return VALID_CATS.find(c => base === c || base.startsWith(c)) || null;
+}
+
+function renderList() {
+  const list = document.getElementById('photo-list');
+  list.innerHTML = '';
+  files.forEach((f, i) => {
+    const cat = extractCat(f.name);
+    const num = extractNum(f.name);
+    const row = document.createElement('div');
+    row.className = 'photo-row';
+
+    const thumb = document.createElement('img');
+    thumb.className = 'photo-thumb';
+    thumb.src = URL.createObjectURL(f);
+
+    const info = document.createElement('div');
+    info.className = 'photo-info';
+    info.innerHTML = `<div class="photo-name">${f.name}</div>
+      <div class="photo-meta">${cat ? '✓ ' + cat : '<span class="error">⚠ unknown category — rename file</span>'}</div>`;
+
+    const order = document.createElement('div');
+    order.className = 'photo-order';
+    order.textContent = '#' + (isFinite(num) ? num : '?');
+
+    row.append(thumb, info, order);
+    list.appendChild(row);
+  });
+  document.getElementById('actions').style.display = files.length ? 'flex' : 'none';
+  document.getElementById('output-area').style.display = 'none';
+}
+
+function generate() {
+  const entries = files.map(f => {
+    const cat = extractCat(f.name);
+    return { src: 'portfolio/' + f.name, cat: cat || 'unknown' };
+  });
+  outputJSON = JSON.stringify(entries, null, 2);
+  document.getElementById('output-box').textContent = outputJSON;
+  document.getElementById('output-area').style.display = 'block';
+}
+
+function copyOutput() {
+  navigator.clipboard.writeText(outputJSON).then(() => alert('Copied to clipboard!'));
+}
+
+function downloadOutput() {
+  const blob = new Blob([outputJSON], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'manifest.json';
+  a.click();
+}
+
+function clearAll() {
+  files = [];
+  document.getElementById('photo-list').innerHTML = '';
+  document.getElementById('actions').style.display = 'none';
+  document.getElementById('output-area').style.display = 'none';
+}
+</script>
+</body>
+</html>
