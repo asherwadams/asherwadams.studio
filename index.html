@@ -54,9 +54,9 @@ html, body { height: 100%; font-family: 'Cormorant Garamond', Georgia, serif; fo
 #page-landing { background: #F0EEE9; overflow: hidden; }
 #landing-img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  opacity: 0; transition: opacity 0.9s ease;
+  animation: fadeInLanding 1s ease forwards;
 }
-#landing-img.loaded { opacity: 1; }
+@keyframes fadeInLanding { from { opacity: 0; } to { opacity: 1; } }
 
 /* ---- PORTFOLIO ---- */
 #page-portfolio { background: #fff; overflow-y: auto; overflow-x: hidden; }
@@ -372,9 +372,7 @@ function navigate(page) {
 // ---- LANDING IMAGE ----
 window.addEventListener('load', async () => {
   await loadManifest();
-  const img = document.getElementById('landing-img');
-  img.onload = () => img.classList.add('loaded');
-  if (img.complete) img.classList.add('loaded');
+  // manifest loaded, nothing else needed for landing image (CSS handles fade)
 });
 
 // ---- PORTFOLIO ----
