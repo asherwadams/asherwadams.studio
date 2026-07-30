@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Portfolio Editor — Asher Adams</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a18; min-height: 100vh; }
+
+header { background: #1a1a18; color: #f5f5f3; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; }
+header h1 { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; }
+header p { font-size: 12px; opacity: 0.5; }
+
+#main { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+/* DROP ZONE */
+#drop-zone {
+  border: 1.5px dashed #ccc; border-radius: 8px; padding: 56px 32px;
+  text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  background: #fff; margin-bottom: 28px;
+}
+#drop-zone.dragover { border-color: #1a1a18; background: #f0ede8; }
+#drop-zone.has-photos { padding: 20px 32px; }
+#drop-zone h2 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+#drop-zone p { font-size: 13px; color: #999; }
+#file-input { display: none; }
+
+/* TOOLBAR */
+#toolbar { display: none; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+#toolbar.visible { display: flex; }
+#photo-count { font-size: 13px; color: #666; }
+.toolbar-actions { display: flex; gap: 10px; }
+button { padding: 9px 20px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px; font-weight: 500; transition: opacity 0.15s; }
+button:hover { opacity: 0.8; }
+#btn-export { background: #1a1a18; color: #fff; }
+#btn-clear { background: #e8e8e6; color: #1a1a18; }
+#btn-add-more { background: #e8e8e6; color: #1a1a18; }
+
+/* GRID */
+#photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.photo-card {
+  background: #fff; border-radius: 6px; overflow: hidden;
+  cursor: grab; user-select: none; position: relative;
+  transition: box-shadow 0.15s, transform 0.15s;
+  border: 2px solid transparent;
+}
+.photo-card:active { cursor: grabbing; }
+.photo-card.dragging { opacity: 0.4; transform: scale(0.97); }
+.photo-card.drag-over { border-color: #1a1a18; box-shadow: 0 0 0 2px #1a1a18; }
+
+.photo-thumb { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; pointer-events: none; }
+.photo-footer { padding: 8px 10px; }
+.photo-name { font-size: 11px; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
+.photo-cat { width: 100%; font-size: 12px; padding: 5px 8px; border: 1px solid #e0e0e0; border-radius: 4px; background: #f9f9f7; color: #1a1a18; cursor: pointer; }
+.photo-cat:focus { outline: none; border-color: #1a1a18; }
+
+.drag-handle {
+  position: absolute; top: 6px; left: 6px;
+  background: rgba(0,0,0,0.45); border-radius: 3px; padding: 3px 5px;
+  display: flex; flex-direction: column; gap: 2px; cursor: grab;
+}
+.drag-handle span { display: block; width: 12px; height: 1.5px; background: #fff; }
+
+.photo-num {
+  position: absolute; top: 6px; right: 6px;
+  background: rgba(0,0,0,0.45); color: #fff; font-size: 10px;
+  padding: 2px 6px; border-radius: 3px; font-family: monospace;
+}
+
+.remove-btn {
+  position: absolute; bottom: 44px; right: 6px;
+  background: rgba(0,0,0,0.35); color: #fff; border: none;
+  border-radius: 3px; padding: 2px 7px; font-size: 10px; cursor: pointer;
+  opacity: 0; transition: opacity 0.15s;
+}
+.photo-card:hover .remove-btn { opacity: 1; }
+
+/* INSTRUCTIONS */
+#instructions { margin-top: 32px; background: #fff; border-radius: 8px; padding: 24px 28px; font-size: 13px; line-height: 1.8; color: #555; }
+#instructions h3 { font-size: 13px; font-weight: 600; color: #1a1a18; margin-bottom: 10px; }
+#instructions ol { padding-left: 18px; }
+code { background: #f0ede8; padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+
+/* EXPORT SUCCESS */
+#export-msg { display: none; margin-top: 12px; padding: 10px 16px; background: #e8f5e9; border-radius: 6px; font-size: 13px; color: #2e7d32; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Portfolio Editor</h1>
+  <p>asherwadams.studio</p>
+</header>
+
+<div id="main">
+
+  <div id="drop-zone" onclick="document.getElementById('file-input').click()">
+    <h2>Drop your portfolio photos here</h2>
+    <p>Or click to select — drag to reorder after loading</p>
+  </div>
+  <input type="file" id="file-input" multiple accept="image/*">
+
+  <div id="toolbar">
+    <span id="photo-count"></span>
+    <div class="toolbar-actions">
+      <button id="btn-add-more" onclick="document.getElementById('file-input').click()">Add more</button>
+      <button id="btn-clear" onclick="clearAll()">Clear all</button>
+      <button id="btn-export" onclick="exportManifest()">Export manifest.json</button>
+    </div>
+  </div>
+
+  <div id="photo-grid"></div>
+  <div id="export-msg">manifest.json downloaded — upload it to the <code>portfolio/</code> folder on GitHub.</div>
+
+  <div id="instructions">
+    <h3>How this works</h3>
+    <ol>
+      <li>Drop all your portfolio photos here (any filenames, any order).</li>
+      <li>Drag cards to reorder — the number in the corner shows position.</li>
+      <li>Set the category for each photo using the dropdown.</li>
+      <li>Click <strong>Export manifest.json</strong> and upload it to the <code>portfolio/</code> folder on GitHub.</li>
+      <li>Upload the photos themselves to the <code>portfolio/</code> folder on GitHub (if not already there).</li>
+    </ol>
+    <p style="margin-top:12px;color:#aaa;">To reorder later: come back here, reload your photos, drag to new order, export again.</p>
+  </div>
+
+</div>
+
+<script>
+const CATEGORIES = ['Japan', 'Hong Kong', 'China', 'Belize', 'Canada', 'Greece', 'United States', 'Automotive', 'Other'];
+const CAT_KEYWORDS = { japan:'Japan', hk:'Hong Kong', china:'China', belize:'Belize', canada:'Canada', greece:'Greece', us:'United States', automotive:'Automotive' };
+
+let photos = []; // { file, src, name, cat }
+let dragSrc = null;
+
+const dropZone = document.getElementById('drop-zone');
+const grid = document.getElementById('photo-grid');
+const fileInput = document.getElementById('file-input');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); addFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+
+function guessCat(name) {
+  const lower = name.toLowerCase().replace(/\.[^.]+$/, '');
+  for (const [key, label] of Object.entries(CAT_KEYWORDS)) {
+    if (lower.includes(key)) return label;
+  }
+  return 'Other';
+}
+
+function addFiles(files) {
+  const toAdd = Array.from(files).filter(f => f.type.startsWith('image/'));
+  toAdd.forEach(f => {
+    if (photos.find(p => p.name === f.name)) return; // skip dupes
+    const reader = new FileReader();
+    reader.onload = e => {
+      photos.push({ file: f, src: e.target.result, name: f.name, cat: guessCat(f.name) });
+      renderGrid();
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderGrid() {
+  grid.innerHTML = '';
+  photos.forEach((photo, i) => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.draggable = true;
+    card.dataset.index = i;
+
+    card.innerHTML = `
+      <img class="photo-thumb" src="${photo.src}" alt="">
+      <div class="drag-handle"><span></span><span></span><span></span></div>
+      <div class="photo-num">${i + 1}</div>
+      <button class="remove-btn" onclick="removePhoto(${i})">✕</button>
+      <div class="photo-footer">
+        <div class="photo-name">${photo.name}</div>
+        <select class="photo-cat" onchange="setCategory(${i}, this.value)">
+          ${CATEGORIES.map(c => `<option value="${c}" ${photo.cat === c ? 'selected' : ''}>${c}</option>`).join('')}
+        </select>
+      </div>
+    `;
+
+    card.addEventListener('dragstart', e => {
+      dragSrc = i;
+      setTimeout(() => card.classList.add('dragging'), 0);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    card.addEventListener('dragend', () => {
+      card.classList.remove('dragging');
+      document.querySelectorAll('.photo-card').forEach(c => c.classList.remove('drag-over'));
+    });
+    card.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.photo-card').forEach(c => c.classList.remove('drag-over'));
+      card.classList.add('drag-over');
+    });
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      const target = parseInt(card.dataset.index);
+      if (dragSrc === null || dragSrc === target) return;
+      const moved = photos.splice(dragSrc, 1)[0];
+      photos.splice(target, 0, moved);
+      dragSrc = null;
+      renderGrid();
+    });
+
+    grid.appendChild(card);
+  });
+
+  // Update UI state
+  const hasPhotos = photos.length > 0;
+  dropZone.classList.toggle('has-photos', hasPhotos);
+  dropZone.querySelector('h2').textContent = hasPhotos ? 'Drop more photos here' : 'Drop your portfolio photos here';
+  document.getElementById('toolbar').classList.toggle('visible', hasPhotos);
+  document.getElementById('photo-count').textContent = `${photos.length} photo${photos.length !== 1 ? 's' : ''}`;
+  document.getElementById('export-msg').style.display = 'none';
+}
+
+function setCategory(i, cat) {
+  photos[i].cat = cat;
+}
+
+function removePhoto(i) {
+  photos.splice(i, 1);
+  renderGrid();
+}
+
+function clearAll() {
+  if (!confirm('Clear all photos?')) return;
+  photos = [];
+  renderGrid();
+}
+
+const CAT_TO_KEY = { 'Japan':'japan','Hong Kong':'hk','China':'china','Belize':'belize','Canada':'canada','Greece':'greece','United States':'us','Automotive':'automotive','Other':'other' };
+
+function exportManifest() {
+  const manifest = photos.map(p => ({
+    src: 'portfolio/' + p.name,
+    cat: CAT_TO_KEY[p.cat] || 'other'
+  }));
+  const json = JSON.stringify(manifest, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'manifest.json';
+  a.click();
+  document.getElementById('export-msg').style.display = 'block';
+}
+</script>
+</body>
+</html>
