@@ -158,10 +158,11 @@ header h1 { font-size: 14px; font-weight: 500; letter-spacing: 0.02em; }
 
 <script>
 // ---- DATA ----
-// sections: [{ id, name, photos: [{ name, src }] }]
+const FAVORITES_ID = 'favorites';
+let favoritesSection = { id: FAVORITES_ID, name: '★ Favorites', photos: [] };
 let sections = [];
 let activeSectionId = null;
-let dragSrc = null; // { sectionId, index }
+let dragSrc = null;
 
 const CAT_KEYS = {
   'Hong Kong': 'hk', 'Hiroshima': 'hiroshima', 'Kyoto': 'kyoto',
@@ -170,8 +171,21 @@ const CAT_KEYS = {
   'Japan': 'japan', 'China': 'china', 'Belize': 'belize',
   'Canada': 'canada', 'United States': 'us'
 };
+const CAT_NAMES = {
+  'hk': 'Hong Kong', 'hiroshima': 'Hiroshima', 'kyoto': 'Kyoto',
+  'osaka': 'Osaka', 'shanghai': 'Shanghai', 'tokyo': 'Tokyo',
+  'greece': 'Greece', 'automotive': 'Automotive',
+  'japan': 'Japan', 'china': 'China', 'belize': 'Belize',
+  'canada': 'Canada', 'us': 'United States'
+};
 
 function uid() { return Math.random().toString(36).slice(2, 9); }
+
+// ---- RESOLVE SECTION (regular or favorites) ----
+function resolveSection(id) {
+  if (id === FAVORITES_ID) return favoritesSection;
+  return sections.find(s => s.id === id);
+}
 
 // ---- SECTIONS ----
 function addSection() {
@@ -196,17 +210,23 @@ function setActiveSection(id) {
 }
 
 function deleteSection() {
-  if (!activeSectionId) return;
-  const s = getSection(activeSectionId);
+  if (!activeSectionId || activeSectionId === FAVORITES_ID) return;
+  const s = resolveSection(activeSectionId);
   if (!confirm(`Delete section "${s.name}" and all its photos?`)) return;
+  // unstar photos from favorites too
+  s.photos.forEach(p => {
+    const fi = favoritesSection.photos.findIndex(f => f.name === p.name);
+    if (fi >= 0) favoritesSection.photos.splice(fi, 1);
+  });
   sections = sections.filter(s => s.id !== activeSectionId);
-  activeSectionId = sections.length ? sections[0].id : null;
+  activeSectionId = sections.length ? sections[0].id : FAVORITES_ID;
   renderSidebar();
   renderMain();
 }
 
 function renameSection() {
-  const s = getSection(activeSectionId);
+  if (activeSectionId === FAVORITES_ID) return;
+  const s = resolveSection(activeSectionId);
   const name = prompt('Rename section:', s.name);
   if (!name || !name.trim()) return;
   s.name = name.trim();
@@ -214,12 +234,19 @@ function renameSection() {
   renderMain();
 }
 
-function getSection(id) { return sections.find(s => s.id === id); }
-
 // ---- SIDEBAR ----
 function renderSidebar() {
   const list = document.getElementById('section-list');
   list.innerHTML = '';
+
+  // Favorites always first
+  const favItem = document.createElement('div');
+  favItem.className = 'section-item' + (activeSectionId === FAVORITES_ID ? ' active' : '');
+  favItem.style.cssText = 'color:#b8860b; font-weight:500;';
+  favItem.innerHTML = `<span>★ Favorites</span><span class="section-count">${favoritesSection.photos.length}</span>`;
+  favItem.onclick = () => setActiveSection(FAVORITES_ID);
+  list.appendChild(favItem);
+
   sections.forEach(s => {
     const item = document.createElement('div');
     item.className = 'section-item' + (s.id === activeSectionId ? ' active' : '');
@@ -243,19 +270,31 @@ function renderMain() {
   welcome.style.display = 'none';
   view.style.display = 'flex';
 
-  const s = getSection(activeSectionId);
+  const s = resolveSection(activeSectionId);
   document.getElementById('section-title').textContent = s.name;
+
+  // Hide drop zone and add-photo controls in Favorites
+  const isFav = activeSectionId === FAVORITES_ID;
+  document.getElementById('drop-zone').style.display = isFav ? 'none' : '';
+  document.querySelector('#section-actions .sm-btn:not(.danger)').style.display = isFav ? 'none' : '';
+  document.querySelector('#section-actions .danger').style.display = isFav ? 'none' : '';
 
   renderGrid();
 }
 
 function renderGrid() {
-  const s = getSection(activeSectionId);
+  const s = resolveSection(activeSectionId);
   if (!s) return;
+  const isFav = activeSectionId === FAVORITES_ID;
   const grid = document.getElementById('photo-grid');
   const empty = document.getElementById('empty-state');
   grid.innerHTML = '';
   empty.classList.toggle('visible', s.photos.length === 0);
+  if (isFav && s.photos.length === 0) {
+    empty.textContent = 'No favorites yet — star photos in any section to add them here.';
+  } else {
+    empty.textContent = 'No photos in this section yet — drop some above.';
+  }
 
   s.photos.forEach((photo, i) => {
     const card = document.createElement('div');
@@ -263,18 +302,21 @@ function renderGrid() {
     card.draggable = true;
     card.dataset.index = i;
 
-    if (photo.featured) card.classList.add('starred');
+    if (!isFav) card.classList.add('starred'); // city section starred photos always show star
     const thumbHtml = photo.src
       ? `<img class="photo-thumb" src="${photo.src}" alt="">`
       : `<div class="photo-thumb-placeholder"><span>${photo.name}</span></div>`;
+
+    const starBtn = isFav
+      ? `<button class="star-btn" onclick="unstarFromFavorites(${i})" title="Remove from portfolio" style="opacity:1">★</button>`
+      : `<button class="star-btn" onclick="toggleStar(${i})" title="Add/remove from portfolio">★</button>`;
+
     card.innerHTML = `
       ${thumbHtml}
       <div class="photo-num">${i + 1}</div>
-      <button class="remove-btn" onclick="removePhoto(${i})">✕</button>
-      <button class="star-btn" onclick="toggleStar(${i})" title="Add to portfolio">${photo.featured ? '★' : '☆'}</button>
-      <div class="photo-footer">
-        <div class="photo-name">${photo.name}</div>
-      </div>
+      ${isFav ? '' : `<button class="remove-btn" onclick="removePhoto(${i})">✕</button>`}
+      ${starBtn}
+      <div class="photo-footer"><div class="photo-name">${photo.name}</div></div>
     `;
 
     card.addEventListener('dragstart', e => {
@@ -309,16 +351,43 @@ function renderGrid() {
 }
 
 function removePhoto(i) {
-  const s = getSection(activeSectionId);
+  const s = resolveSection(activeSectionId);
+  const photo = s.photos[i];
+  // also remove from favorites
+  const fi = favoritesSection.photos.findIndex(f => f.name === photo.name);
+  if (fi >= 0) favoritesSection.photos.splice(fi, 1);
   s.photos.splice(i, 1);
   renderGrid();
   renderSidebar();
 }
 
 function toggleStar(i) {
-  const s = getSection(activeSectionId);
-  s.photos[i].featured = !s.photos[i].featured;
+  const s = resolveSection(activeSectionId);
+  const photo = s.photos[i];
+  const fi = favoritesSection.photos.findIndex(f => f.name === photo.name);
+  if (fi >= 0) {
+    // unstar — remove from favorites
+    favoritesSection.photos.splice(fi, 1);
+    photo.featured = false;
+  } else {
+    // star — add to favorites
+    photo.featured = true;
+    favoritesSection.photos.push({ ...photo, cat: sectionNameToCat(s.name) });
+  }
   renderGrid();
+  renderSidebar();
+}
+
+function unstarFromFavorites(i) {
+  const favPhoto = favoritesSection.photos[i];
+  favoritesSection.photos.splice(i, 1);
+  // update featured flag in city section
+  sections.forEach(s => {
+    const p = s.photos.find(p => p.name === favPhoto.name);
+    if (p) p.featured = false;
+  });
+  renderGrid();
+  renderSidebar();
 }
 
 // ---- FILE INPUT ----
@@ -330,14 +399,14 @@ dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover
 dropZone.addEventListener('drop', e => {
   e.preventDefault();
   dropZone.classList.remove('dragover');
-  if (!activeSectionId) return;
+  if (!activeSectionId || activeSectionId === FAVORITES_ID) return;
   addFiles(e.dataTransfer.files);
 });
 fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
 
 function addFiles(files) {
-  const s = getSection(activeSectionId);
-  if (!s) return;
+  const s = resolveSection(activeSectionId);
+  if (!s || activeSectionId === FAVORITES_ID) return;
   Array.from(files).filter(f => f.type.startsWith('image/')).forEach(f => {
     if (s.photos.find(p => p.name === f.name)) return;
     s.photos.push({ name: f.name, src: URL.createObjectURL(f) });
@@ -347,14 +416,6 @@ function addFiles(files) {
 }
 
 // ---- IMPORT ----
-const CAT_NAMES = {
-  'hk': 'Hong Kong', 'hiroshima': 'Hiroshima', 'kyoto': 'Kyoto',
-  'osaka': 'Osaka', 'shanghai': 'Shanghai', 'tokyo': 'Tokyo',
-  'greece': 'Greece', 'automotive': 'Automotive',
-  'japan': 'Japan', 'china': 'China', 'belize': 'Belize',
-  'canada': 'Canada', 'us': 'United States'
-};
-
 function importManifest() {
   const manifestInput = document.createElement('input');
   manifestInput.type = 'file';
@@ -367,7 +428,12 @@ function importManifest() {
     let entries;
     try { entries = JSON.parse(text); } catch(e) { alert('Invalid JSON'); return; }
 
-    // Group by cat, preserving order
+    // Populate favorites (featured entries in manifest order)
+    favoritesSection.photos = entries
+      .filter(e => e.featured)
+      .map(e => ({ name: e.src.replace('portfolio/', ''), src: null, featured: true, cat: e.cat }));
+
+    // Group non-favorite entries by cat for city sections (but still include featured in city sections too)
     const catOrder = [], byCat = {};
     entries.forEach(e => {
       if (!byCat[e.cat]) { byCat[e.cat] = []; catOrder.push(e.cat); }
@@ -380,14 +446,15 @@ function importManifest() {
       photos: byCat[cat].map(e => ({
         name: e.src.replace('portfolio/', ''),
         src: null,
-        featured: e.featured || false
+        featured: e.featured || false,
+        cat
       }))
     }));
 
     renderSidebar();
-    if (sections.length) setActiveSection(sections[0].id);
+    setActiveSection(FAVORITES_ID);
 
-    // Now pick the photo folder
+    // Pick the photo folder
     const folderInput = document.createElement('input');
     folderInput.type = 'file';
     folderInput.multiple = true;
@@ -398,11 +465,12 @@ function importManifest() {
       const fileMap = {};
       Array.from(folderInput.files).forEach(f => { fileMap[f.name] = f; });
       document.body.removeChild(folderInput);
+      // Apply srcs to city sections
       sections.forEach(s => {
-        s.photos.forEach(p => {
-          if (fileMap[p.name]) p.src = URL.createObjectURL(fileMap[p.name]);
-        });
+        s.photos.forEach(p => { if (fileMap[p.name]) p.src = URL.createObjectURL(fileMap[p.name]); });
       });
+      // Apply srcs to favorites (reuse same object URL)
+      favoritesSection.photos.forEach(p => { if (fileMap[p.name]) p.src = URL.createObjectURL(fileMap[p.name]); });
       renderGrid();
       renderSidebar();
     };
@@ -414,24 +482,32 @@ function sectionNameToCat(name) {
   for (const [label, key] of Object.entries(CAT_KEYS)) {
     if (name.toLowerCase() === label.toLowerCase()) return key;
   }
-  // fallback: lowercase, strip spaces
   return name.toLowerCase().replace(/\s+/g, '_');
 }
 
 function exportManifest() {
-  if (sections.every(s => s.photos.length === 0)) {
+  if (sections.every(s => s.photos.length === 0) && favoritesSection.photos.length === 0) {
     alert('No photos to export yet.');
     return;
   }
   const manifest = [];
+  const favNames = new Set(favoritesSection.photos.map(p => p.name));
+
+  // Favorites first, in their drag order, with featured:true
+  favoritesSection.photos.forEach(photo => {
+    manifest.push({ src: 'portfolio/' + photo.name, cat: photo.cat, featured: true });
+  });
+
+  // Then all city section photos that are NOT favorited
   sections.forEach(s => {
     const cat = sectionNameToCat(s.name);
     s.photos.forEach(photo => {
-      const entry = { src: 'portfolio/' + photo.name, cat };
-      if (photo.featured) entry.featured = true;
-      manifest.push(entry);
+      if (!favNames.has(photo.name)) {
+        manifest.push({ src: 'portfolio/' + photo.name, cat });
+      }
     });
   });
+
   const json = JSON.stringify(manifest, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
   const a = document.createElement('a');
