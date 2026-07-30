@@ -315,14 +315,10 @@ function addFiles(files) {
   if (!s) return;
   Array.from(files).filter(f => f.type.startsWith('image/')).forEach(f => {
     if (s.photos.find(p => p.name === f.name)) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      s.photos.push({ name: f.name, src: e.target.result });
-      renderGrid();
-      renderSidebar();
-    };
-    reader.readAsDataURL(f);
+    s.photos.push({ name: f.name, src: URL.createObjectURL(f) });
   });
+  renderGrid();
+  renderSidebar();
 }
 
 // ---- EXPORT ----
