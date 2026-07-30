@@ -437,7 +437,7 @@ function renderGrid(filter) {
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('fade-in'); observer.unobserve(e.target); } });
-  }, { threshold: 0.04 });
+  }, { threshold: 0.01, rootMargin: '600px 0px' });
   grid.querySelectorAll('.mosaic-item').forEach(el => observer.observe(el));
 }
 
