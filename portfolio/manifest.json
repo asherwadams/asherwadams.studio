@@ -5,8 +5,68 @@
     "featured": true
   },
   {
+    "src": "portfolio/AWA01965.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01500.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01999.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA00910.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
     "src": "portfolio/AWA00807.jpg",
     "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01036-Pano.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03069-Pano.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02962.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03210.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA00711.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01187.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02790.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02921.jpg",
+    "cat": "hiroshima",
     "featured": true
   },
   {
@@ -20,13 +80,438 @@
     "featured": true
   },
   {
-    "src": "portfolio/AWA01187.jpg",
+    "src": "portfolio/AWA02210.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03677.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02749.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03683.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA00693.jpg",
     "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01542-Edit.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01905.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03695.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02556.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02976.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01849.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02762.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02690.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02562.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02395.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02438.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01673.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02764.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02262.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01730.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02355.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03663.jpg",
+    "cat": "tokyo",
     "featured": true
   },
   {
     "src": "portfolio/AWA00777.jpg",
     "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03396.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA00938.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA00914.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02222.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02227.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02272.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02285.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01738.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01764.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01788.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01784.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03422.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01407.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01383.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01446.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03800-Edit.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01621.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02821.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03311.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03500.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01100.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03506.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01349.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03634.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4763.jpg",
+    "cat": "greece",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01380.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4732.jpg",
+    "cat": "greece",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4828.jpg",
+    "cat": "greece",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03472.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02000.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01921.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01169.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02946.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA00870.jpg",
+    "cat": "hk",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02782.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02481.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01879.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02553.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02848.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02570.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01899.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02566.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02419.jpg",
+    "cat": "kyoto",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03661.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4662.jpg",
+    "cat": "greece",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03762.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02031.jpg",
+    "cat": "osaka",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4510.jpg",
+    "cat": "greece",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01558.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03745.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA02959.jpg",
+    "cat": "hiroshima",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01576.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01308.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/Template-for-Insta_01_05.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/Template-for-Insta_01_04.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA2.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA01612.jpg",
+    "cat": "shanghai",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA3.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA03411.jpg",
+    "cat": "tokyo",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWA5.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4925-Enhanced-NR.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4986.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4915-Enhanced-NR.jpg",
+    "cat": "automotive",
+    "featured": true
+  },
+  {
+    "src": "portfolio/AWAS4920.jpg",
+    "cat": "automotive",
     "featured": true
   },
   {
@@ -36,11 +521,6 @@
   {
     "src": "portfolio/AWA00730.jpg",
     "cat": "hk"
-  },
-  {
-    "src": "portfolio/AWA00938.jpg",
-    "cat": "hk",
-    "featured": true
   },
   {
     "src": "portfolio/AWA00866.jpg",
@@ -56,18 +536,7 @@
   },
   {
     "src": "portfolio/AWA00709.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA00711.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01036-Pano.jpg",
-    "cat": "hk",
-    "featured": true
+    "cat": "hk"
   },
   {
     "src": "portfolio/AWA00919.jpg",
@@ -102,28 +571,8 @@
     "cat": "hk"
   },
   {
-    "src": "portfolio/AWA00910.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA00914.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA00870.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01098.jpg",
     "cat": "hk"
-  },
-  {
-    "src": "portfolio/AWA01100.jpg",
-    "cat": "hk",
-    "featured": true
   },
   {
     "src": "portfolio/AWA00714.jpg",
@@ -135,8 +584,7 @@
   },
   {
     "src": "portfolio/AWA00752.jpg",
-    "cat": "hk",
-    "featured": true
+    "cat": "hk"
   },
   {
     "src": "portfolio/AWA00810.jpg",
@@ -151,23 +599,12 @@
     "cat": "hk"
   },
   {
-    "src": "portfolio/AWA01169.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01177.jpg",
     "cat": "hk"
   },
   {
     "src": "portfolio/AWA01184.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA00693.jpg",
-    "cat": "hk",
-    "featured": true
+    "cat": "hk"
   },
   {
     "src": "portfolio/AWA00691.jpg",
@@ -179,62 +616,15 @@
   },
   {
     "src": "portfolio/AWA00779.jpg",
-    "cat": "hk",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02762.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02790.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03210.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03069-Pano.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02962.jpg",
-    "cat": "hiroshima",
-    "featured": true
+    "cat": "hk"
   },
   {
     "src": "portfolio/AWA03162.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02782.jpg",
-    "cat": "hiroshima",
-    "featured": true
+    "cat": "hiroshima"
   },
   {
     "src": "portfolio/AWA02974.jpg",
     "cat": "hiroshima"
-  },
-  {
-    "src": "portfolio/AWA02976.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02921.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02749.jpg",
-    "cat": "hiroshima",
-    "featured": true
   },
   {
     "src": "portfolio/AWA02716.jpg",
@@ -249,11 +639,6 @@
     "cat": "hiroshima"
   },
   {
-    "src": "portfolio/AWA02821.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA02756.jpg",
     "cat": "hiroshima"
   },
@@ -262,22 +647,12 @@
     "cat": "hiroshima"
   },
   {
-    "src": "portfolio/AWA02764.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA02758.jpg",
     "cat": "hiroshima"
   },
   {
     "src": "portfolio/AWA02860.jpg",
     "cat": "hiroshima"
-  },
-  {
-    "src": "portfolio/AWA02848.jpg",
-    "cat": "hiroshima",
-    "featured": true
   },
   {
     "src": "portfolio/AWA02851.jpg",
@@ -300,11 +675,6 @@
     "cat": "hiroshima"
   },
   {
-    "src": "portfolio/AWA02946.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA02830.jpg",
     "cat": "hiroshima"
   },
@@ -313,53 +683,12 @@
     "cat": "hiroshima"
   },
   {
-    "src": "portfolio/AWA02959.jpg",
-    "cat": "hiroshima",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA03183.jpg",
     "cat": "hiroshima"
   },
   {
-    "src": "portfolio/AWA02210.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA02211.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02355.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02556.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02222.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02227.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02285.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02272.jpg",
-    "cat": "kyoto",
-    "featured": true
+    "cat": "kyoto"
   },
   {
     "src": "portfolio/AWA02270.jpg",
@@ -370,43 +699,8 @@
     "cat": "kyoto"
   },
   {
-    "src": "portfolio/AWA02262.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02395.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02438.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA02448.jpg",
     "cat": "kyoto"
-  },
-  {
-    "src": "portfolio/AWA02553.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02570.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02566.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02690.jpg",
-    "cat": "kyoto",
-    "featured": true
   },
   {
     "src": "portfolio/AWA02712.jpg",
@@ -421,18 +715,8 @@
     "cat": "kyoto"
   },
   {
-    "src": "portfolio/AWA02481.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA02365.jpg",
     "cat": "kyoto"
-  },
-  {
-    "src": "portfolio/AWA02419.jpg",
-    "cat": "kyoto",
-    "featured": true
   },
   {
     "src": "portfolio/AWA02375.jpg",
@@ -444,13 +728,7 @@
   },
   {
     "src": "portfolio/AWA02208.jpg",
-    "cat": "kyoto",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02562.jpg",
-    "cat": "kyoto",
-    "featured": true
+    "cat": "kyoto"
   },
   {
     "src": "portfolio/AWA02173.jpg",
@@ -477,21 +755,6 @@
     "cat": "kyoto"
   },
   {
-    "src": "portfolio/AWA01999.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01965.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01921.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01742.jpg",
     "cat": "osaka"
   },
@@ -508,38 +771,8 @@
     "cat": "osaka"
   },
   {
-    "src": "portfolio/AWA01730.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01738.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA02031.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01928.jpg",
     "cat": "osaka"
-  },
-  {
-    "src": "portfolio/AWA01849.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01899.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01905.jpg",
-    "cat": "osaka",
-    "featured": true
   },
   {
     "src": "portfolio/AWA01853.jpg",
@@ -554,32 +787,12 @@
     "cat": "osaka"
   },
   {
-    "src": "portfolio/AWA01673.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01726.jpg",
     "cat": "osaka"
   },
   {
-    "src": "portfolio/AWA01764.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01781.jpg",
     "cat": "osaka"
-  },
-  {
-    "src": "portfolio/AWA01788.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01784.jpg",
-    "cat": "osaka",
-    "featured": true
   },
   {
     "src": "portfolio/AWA01771.jpg",
@@ -588,11 +801,6 @@
   {
     "src": "portfolio/AWA01693.jpg",
     "cat": "osaka"
-  },
-  {
-    "src": "portfolio/AWA02000.jpg",
-    "cat": "osaka",
-    "featured": true
   },
   {
     "src": "portfolio/AWA01979.jpg",
@@ -615,33 +823,16 @@
     "cat": "osaka"
   },
   {
-    "src": "portfolio/AWA01879.jpg",
-    "cat": "osaka",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01723.jpg",
     "cat": "osaka"
   },
   {
     "src": "portfolio/AWA01546-Pano.jpg",
-    "cat": "shanghai",
-    "featured": true
+    "cat": "shanghai"
   },
   {
     "src": "portfolio/AWA01481.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01500.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01308.jpg",
-    "cat": "shanghai",
-    "featured": true
+    "cat": "shanghai"
   },
   {
     "src": "portfolio/AWA01409.jpg",
@@ -660,11 +851,6 @@
     "cat": "shanghai"
   },
   {
-    "src": "portfolio/AWA01542-Edit.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01461.jpg",
     "cat": "shanghai"
   },
@@ -681,11 +867,6 @@
     "cat": "shanghai"
   },
   {
-    "src": "portfolio/AWA01558.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01284.jpg",
     "cat": "shanghai"
   },
@@ -698,16 +879,6 @@
     "cat": "shanghai"
   },
   {
-    "src": "portfolio/AWA01380.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01349.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01353-Pano-Edit.jpg",
     "cat": "shanghai"
   },
@@ -716,27 +887,12 @@
     "cat": "shanghai"
   },
   {
-    "src": "portfolio/AWA01576.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01592.jpg",
     "cat": "shanghai"
   },
   {
-    "src": "portfolio/AWA01612.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA01596.jpg",
     "cat": "shanghai"
-  },
-  {
-    "src": "portfolio/AWA01407.jpg",
-    "cat": "shanghai",
-    "featured": true
   },
   {
     "src": "portfolio/AWA01403.jpg",
@@ -745,16 +901,6 @@
   {
     "src": "portfolio/AWA01412.jpg",
     "cat": "shanghai"
-  },
-  {
-    "src": "portfolio/AWA01383.jpg",
-    "cat": "shanghai",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA01446.jpg",
-    "cat": "shanghai",
-    "featured": true
   },
   {
     "src": "portfolio/AWA01469.jpg",
@@ -781,32 +927,12 @@
     "cat": "shanghai"
   },
   {
-    "src": "portfolio/AWA01621.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA03413.jpg",
     "cat": "tokyo"
   },
   {
-    "src": "portfolio/AWA03634.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA03285.jpg",
     "cat": "tokyo"
-  },
-  {
-    "src": "portfolio/AWA03396.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03663.jpg",
-    "cat": "tokyo",
-    "featured": true
   },
   {
     "src": "portfolio/AWA03341.jpg",
@@ -815,21 +941,6 @@
   {
     "src": "portfolio/AWA03647.jpg",
     "cat": "tokyo"
-  },
-  {
-    "src": "portfolio/AWA03683.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03677.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03762.jpg",
-    "cat": "tokyo",
-    "featured": true
   },
   {
     "src": "portfolio/AWA03701.jpg",
@@ -842,11 +953,6 @@
   {
     "src": "portfolio/AWA03319.jpg",
     "cat": "tokyo"
-  },
-  {
-    "src": "portfolio/AWA03311.jpg",
-    "cat": "tokyo",
-    "featured": true
   },
   {
     "src": "portfolio/AWA03348.jpg",
@@ -873,56 +979,16 @@
     "cat": "tokyo"
   },
   {
-    "src": "portfolio/AWA03695.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03500.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03472.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA03264.jpg",
     "cat": "tokyo"
-  },
-  {
-    "src": "portfolio/AWA03661.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03411.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA03506.jpg",
-    "cat": "tokyo",
-    "featured": true
   },
   {
     "src": "portfolio/AWA03552.jpg",
     "cat": "tokyo"
   },
   {
-    "src": "portfolio/AWA03422.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA03441.jpg",
     "cat": "tokyo"
-  },
-  {
-    "src": "portfolio/AWA03800-Edit.jpg",
-    "cat": "tokyo",
-    "featured": true
   },
   {
     "src": "portfolio/AWA03706.jpg",
@@ -938,8 +1004,7 @@
   },
   {
     "src": "portfolio/AWA03290.jpg",
-    "cat": "tokyo",
-    "featured": true
+    "cat": "tokyo"
   },
   {
     "src": "portfolio/AWA03360.jpg",
@@ -970,11 +1035,6 @@
     "cat": "tokyo"
   },
   {
-    "src": "portfolio/AWA03745.jpg",
-    "cat": "tokyo",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWA03716.jpg",
     "cat": "tokyo"
   },
@@ -995,38 +1055,12 @@
     "cat": "tokyo"
   },
   {
-    "src": "portfolio/AWAS4828.jpg",
-    "cat": "greece",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWAS4763.jpg",
-    "cat": "greece",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWAS4732.jpg",
-    "cat": "greece",
-    "featured": true
-  },
-  {
     "src": "portfolio/AWAS4477.jpg",
-    "cat": "greece",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWAS4662.jpg",
-    "cat": "greece",
-    "featured": true
+    "cat": "greece"
   },
   {
     "src": "portfolio/AWAS4616.jpg",
     "cat": "greece"
-  },
-  {
-    "src": "portfolio/AWAS4510.jpg",
-    "cat": "greece",
-    "featured": true
   },
   {
     "src": "portfolio/AWAS4469.jpg",
@@ -1074,8 +1108,7 @@
   },
   {
     "src": "portfolio/AWAS4482-Enhanced-NR.jpg",
-    "cat": "greece",
-    "featured": true
+    "cat": "greece"
   },
   {
     "src": "portfolio/AWAS4675.jpg",
@@ -1087,8 +1120,7 @@
   },
   {
     "src": "portfolio/AWAS4574-Edit.jpg",
-    "cat": "greece",
-    "featured": true
+    "cat": "greece"
   },
   {
     "src": "portfolio/AWAS4741.jpg",
@@ -1135,39 +1167,12 @@
     "cat": "greece"
   },
   {
-    "src": "portfolio/Template-for-Insta_01_05.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
     "src": "portfolio/Template-for-Insta_01_01.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/Template-for-Insta_01_04.jpg",
-    "cat": "automotive",
-    "featured": true
+    "cat": "automotive"
   },
   {
     "src": "portfolio/Template-for-Insta_01_02.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA2.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA3.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWA5.jpg",
-    "cat": "automotive",
-    "featured": true
+    "cat": "automotive"
   },
   {
     "src": "portfolio/AWA6.jpg",
@@ -1175,43 +1180,19 @@
   },
   {
     "src": "portfolio/AWA16.jpg",
-    "cat": "automotive",
-    "featured": true
+    "cat": "automotive"
   },
   {
     "src": "portfolio/AWA15.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWAS4925-Enhanced-NR.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWAS4986.jpg",
-    "cat": "automotive",
-    "featured": true
+    "cat": "automotive"
   },
   {
     "src": "portfolio/AWAS4985.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWAS4915-Enhanced-NR.jpg",
-    "cat": "automotive",
-    "featured": true
-  },
-  {
-    "src": "portfolio/AWAS4920.jpg",
-    "cat": "automotive",
-    "featured": true
+    "cat": "automotive"
   },
   {
     "src": "portfolio/AWAS4916.jpg",
-    "cat": "automotive",
-    "featured": true
+    "cat": "automotive"
   },
   {
     "src": "portfolio/AWAS4896.jpg",
