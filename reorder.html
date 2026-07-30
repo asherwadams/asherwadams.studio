@@ -76,6 +76,10 @@ header h1 { font-size: 14px; font-weight: 500; letter-spacing: 0.02em; }
 .photo-num { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.5); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
 .remove-btn { position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.45); color: #fff; border: none; border-radius: 3px; padding: 2px 7px; font-size: 10px; cursor: pointer; opacity: 0; transition: opacity 0.15s; }
 .photo-card:hover .remove-btn { opacity: 1; }
+.star-btn { position: absolute; bottom: 5px; right: 5px; background: none; border: none; font-size: 16px; cursor: pointer; line-height: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5)); opacity: 0.4; transition: opacity 0.15s, transform 0.1s; }
+.star-btn:hover { opacity: 1; }
+.photo-card.starred .star-btn { opacity: 1; }
+.photo-card.starred { box-shadow: 0 0 0 2px #f5c518 inset; }
 
 /* EMPTY STATE */
 #empty-state { padding: 48px 24px; text-align: center; color: #bbb; font-size: 14px; display: none; }
@@ -251,10 +255,12 @@ function renderGrid() {
     card.draggable = true;
     card.dataset.index = i;
 
+    if (photo.featured) card.classList.add('starred');
     card.innerHTML = `
       <img class="photo-thumb" src="${photo.src}" alt="">
       <div class="photo-num">${i + 1}</div>
       <button class="remove-btn" onclick="removePhoto(${i})">✕</button>
+      <button class="star-btn" onclick="toggleStar(${i})" title="Add to portfolio">${photo.featured ? '★' : '☆'}</button>
       <div class="photo-footer">
         <div class="photo-name">${photo.name}</div>
       </div>
@@ -296,6 +302,12 @@ function removePhoto(i) {
   s.photos.splice(i, 1);
   renderGrid();
   renderSidebar();
+}
+
+function toggleStar(i) {
+  const s = getSection(activeSectionId);
+  s.photos[i].featured = !s.photos[i].featured;
+  renderGrid();
 }
 
 // ---- FILE INPUT ----
@@ -341,7 +353,9 @@ function exportManifest() {
   sections.forEach(s => {
     const cat = sectionNameToCat(s.name);
     s.photos.forEach(photo => {
-      manifest.push({ src: 'portfolio/' + photo.name, cat });
+      const entry = { src: 'portfolio/' + photo.name, cat };
+      if (photo.featured) entry.featured = true;
+      manifest.push(entry);
     });
   });
   const json = JSON.stringify(manifest, null, 2);
