@@ -410,7 +410,7 @@ function renderGrid(filter) {
 
   const visible = PHOTOS
     .map((p, i) => ({ ...p, idx: i }))
-    .filter(p => filter === 'All' || CATEGORY_MAP[p.cat] === filter);
+    .filter(p => filter === 'All' ? p.featured : CATEGORY_MAP[p.cat] === filter);
 
   filteredIndices = visible.map(p => p.idx);
 
