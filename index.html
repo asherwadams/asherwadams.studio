@@ -75,8 +75,8 @@ html, body { height: 100%; font-family: 'Cormorant Garamond', Georgia, serif; fo
 .filter-btn:hover { opacity: 0.7; }
 .filter-btn.active { opacity: 1; }
 #portfolio-rule { width: 100%; height: 1px; background: #1A1A18; opacity: 0.12; margin-top: 18px; }
-#mosaic-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 4px 24px 64px 24px; }
-.mosaic-col { display: flex; flex-direction: column; gap: 4px; }
+#mosaic-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 24px 24px 64px 24px; }
+.mosaic-col { display: flex; flex-direction: column; gap: 6px; }
 .mosaic-item { width: 100%; cursor: pointer; overflow: hidden; display: block; opacity: 0; }
 .mosaic-item.fade-in { animation: fadeInItem 0.5s ease forwards; }
 @keyframes fadeInItem { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -184,7 +184,7 @@ html, body { height: 100%; font-family: 'Cormorant Garamond', Georgia, serif; fo
   #mobile-header { display: flex; }
   #content { margin-left: 0; width: 100vw; padding-top: 64px; }
 
-  #mosaic-grid { grid-template-columns: repeat(2, 1fr); padding: 4px 8px 64px 8px; }
+  #mosaic-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 24px 8px 64px 8px; }
 
   #portfolio-header { padding: 16px 8px 0 8px; }
   #portfolio-filters { gap: 12px; }
@@ -437,7 +437,7 @@ function renderGrid(filter) {
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('fade-in'); observer.unobserve(e.target); } });
-  }, { threshold: 0.04 });
+  }, { threshold: 0.01, rootMargin: '600px 0px' });
   grid.querySelectorAll('.mosaic-item').forEach(el => observer.observe(el));
 }
 
